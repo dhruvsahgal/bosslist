@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+ <head>
+ <title>Timer</title>
+
+	 <meta charset="utf-8" />
+	 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	 <meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+ </head>
+
+	<body>
+		<button onclick = "myTimer()">Start it</button>
+		<button onclick = "stopTimer()" >Stop it</button>
+		<p id= "time">0:00:00</p>
+		<script>
+			var time = 0, elapsed = '0.0';
+			var interval;
+			
+			function myTimer(){
+					
+					interval = window.setInterval(function() {
+			    	
+			    	time += 1000;
+			    	elapsed = Math.floor(time / 100) / 10;
+							    
+			   
+					//Conversion
+					// multiply by 1000 because Date() requires miliseconds
+					var date = new Date(elapsed * 1000);
+					var hh = date.getUTCHours();
+					var mm = date.getUTCMinutes();
+					var ss = date.getSeconds();
+					// These lines ensure you have two-digits
+					if (hh < 10) {hh = "0"+hh;}
+					if (mm < 10) {mm = "0"+mm;}
+					if (ss < 10) {ss = "0"+ss;}
+					// This formats your string to HH:MM:SS
+					var formattedElapsedTime = hh+":"+mm+":"+ss;
+
+					document.getElementById('time').innerHTML=formattedElapsedTime;
+				}, 1000); 
+			}
+					function stopTimer() {
+                   clearInterval(interval);
+               }
+			
+		</script>
+	</body>
+</html>

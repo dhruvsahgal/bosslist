@@ -15,35 +15,30 @@
 		<p id= "time">0:00:00</p>
 		<script>
 			var time = 0, elapsed = '0.0';
-			var interval;
+			var timer;
 			
 			function myTimer(){
 					
-					interval = window.setInterval(function() {
-			    	
+					timer = window.setInterval(function() {
 			    	time += 1000;
 			    	elapsed = Math.floor(time / 100) / 10;
 							    
-			   
-					//Conversion
-					// multiply by 1000 because Date() requires miliseconds
+			   		//Conversion
 					var date = new Date(elapsed * 1000);
 					var hh = date.getUTCHours();
 					var mm = date.getUTCMinutes();
 					var ss = date.getSeconds();
-					// These lines ensure you have two-digits
 					if (hh < 10) {hh = "0"+hh;}
 					if (mm < 10) {mm = "0"+mm;}
 					if (ss < 10) {ss = "0"+ss;}
-					// This formats your string to HH:MM:SS
 					var formattedElapsedTime = hh+":"+mm+":"+ss;
-
 					document.getElementById('time').innerHTML=formattedElapsedTime;
+
 				}, 1000); 
 			}
-					function stopTimer() {
-                   clearInterval(interval);
-               }
+			function stopTimer() {
+                clearInterval(timer);
+            }
 			
 		</script>
 	</body>

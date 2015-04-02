@@ -1,0 +1,68 @@
+Purpose:
+To help solve the problem of completing and planning your daily task lists effectively.
+
+Hypothesis:
+The average person is poor at planning their tasks and estimating the amount of time it takes to complete them. In fact, studies show that the average worker is productive for only 3 hours a day! They are often paralyzed by a large to do list and feel overwhelmed thus leading to procrastination. Helping them plan correctly will lead to a boost in productivity and a greater sense of accomplishment. Users will benefit from the  data collected using the solution by gaining access to analytics on how they are improving at time estimation and task allocation. 
+
+Workflow
+
+User specific Presets
+
+	* Total Daily workable hours. (Default 8 hours)
+	* Total Daily productive hours ( Default 4 hours)
+	* Choose work style, Jira or Pomodoro
+
+
+Adding a Task
+
+	1. Add tasks in "Open Bucket" or directly into one of the 4 pre-defined buckets
+
+
+	* 
+		* Buckets are: 
+
+			* Urgent/Now
+			* High Priority/Next Up
+			* Backburner/Icebox
+			* Reminders / Specific Date to do a task
+
+
+
+
+	1. Input Tasks information
+
+
+	* 
+		* 140 char description of task *
+		* Larger description
+		* ETC (Estimated Time to Completion) *
+		* Attachments
+
+
+
+	1. Task is added to the relevant bucket or the "open bucket" in a card form 
+
+Viewing a Task
+Using a card based UI (Trello/Any.do) once user clicks on the task, a modal popup shows the summary of the task. User can then "Start" the task 
+
+Starting and Completing a Task
+Once a task is started, the amount of time from when the task was started to ended is recorded. Once task is mark completed, the TTC (time to completion) is compared with the ETC. The user can see how well they estimated. 
+
+Reports / User Behavior Analytics
+Look at JIRA reports for ideas
+
+	* How good are they are they at estimating their tasks
+	* Are they allocation their tasks effectively? i.e. Do they complete their "Now" tasks before going onto other buckets. 
+	* Are they
+
+
+Update list
+Done/prompted the night before.
+
+Validations
+
+	* Total ETC must be less than Total Daily Workable Hours.
+
+		* If ETC is greater, flag visually
+
+

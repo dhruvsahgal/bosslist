@@ -10,46 +10,120 @@
  </head>
 
 	<body>
-		<button onclick = "myTimer()">Start it</button>
-		<button onclick = "stopTimer()" >Stop it</button>
-		<p id= "time">0:00:00</p>
+		<h1>Concept</h1>
+		<h2>
+			<li>Pomodoro Technique is a technique of focused time intervals, see more here: </li> 
+			<span><a href="http://en.wikipedia.org/wiki/Pomodoro_Technique">Click here	</a> </span>
+				
+			<li>Pomodori Value is the amount of consecutive Pomodoro's.</li> 
+			<li>According to the theory, after 4 focused sessions of 25 mins each, the break time goes from 5 mins between Pomodori's to 30 mins.</li> 
+		</h2>
+		
+		<strong>Pomodori Value</Strong>
+		<br>
+		<br>
+		<select id="pomodori" name="Pomodori Value">
+			<option value="1">1</option>
+		    <option value="2">2</option>
+		    <option value="3">3</option>
+		    <option value="4">4</option>
+		</select>
+		<br>
+		<br>
+		<strong>Timer:</strong>
+		<button onclick = "myTimer()">Start Timer</button>
+		<button onclick = "stopTimer()" >Stop Timer</button>
+		<br>
+		<i>*This actually needs to be a timer counting down, for now it's counting up</i>
+		<p></p>
+		<div>Focused Time: <span id= "time"> 25:00</span></div>
+		<p>	</p>
+		<div> Pomodori value: 
+		<span id="pomodoriValue"></span> </div>
+		<div>Break Time: 
+		<span id = "breakValue"></span> </div>
+		
+
+		
 		<script>
-			var time = 0, elapsed = '0.0';
-			var timer;
-			var pomodori = 1;
+			// var time = 0, elapsed = 25000;
+			var seconds = 1500;
+			var countdown;
+			var timerCheck = 0;
 			var pomodoriMax = 4;
 			var breakTime = 5;
 			var breakTimeMax = 30;
-			var intervalTime = 25000;
 			
+			
+	
+			function myTimer(){	
 
+				if (timerCheck == 0) {
+					timerCheck = 1;
 
-			function myTimer(){
-					
-				timer = window.setInterval(counter, 1000);
+					countdown = setInterval(counter, 1000);
+					console.log(pomodori.value);
 
-					function counter() {
-			    	time += 1000;
-			    	elapsed = Math.floor(time / 100) / 10;
-							    
-			   		//Conversion
-					var date = new Date(elapsed * 1000);
-					var hh = date.getUTCHours();
-					var mm = date.getUTCMinutes();
-					var ss = date.getSeconds();
-					if (hh < 10) {hh = "0"+hh;}
-					if (mm < 10) {mm = "0"+mm;}
-					if (ss < 10) {ss = "0"+ss;}
-					var formattedElapsedTime = hh+":"+mm+":"+ss;
-					document.getElementById('time').innerHTML=formattedElapsedTime;
-							
+					if (pomodori.value<pomodoriMax) {
+
+						document.getElementById('pomodoriValue').innerHTML = pomodori.value;
+						document.getElementById('breakValue').innerHTML = breakTime;
+
 					}
+					else{
+
+						document.getElementById('pomodoriValue').innerHTML = 'Maxed out';
+						document.getElementById('breakValue').innerHTML = breakTimeMax;
+						
+					}
+				}
+				else{
+
+					console.log("timer already running!");
+				}
+
 			}
 
 			function stopTimer() {
-                clearInterval(timer);
-            }
+
+                clearInterval(countdown);
+                timerCheck = 0;
+               
+           }
+
+           function counter() {
+    			var minutes = Math.round((seconds - 30)/60);
+    			var remainingSeconds = seconds % 60;
+    			if (remainingSeconds < 10) {
+        			remainingSeconds = "0" + remainingSeconds;  
+    			}
+    			document.getElementById('time').innerHTML = minutes + ":" + remainingSeconds;
+    			if (seconds == 0) {
+       			clearInterval(countdown);
+       			document.getElementById('time').innerHTML="25:00";
+    			} else {
+       				seconds--;
+   				}
+			}
+
+   //          function counter() {
+
+			//     	time += 1000;
+
+			//     	elapsed = Math.floor(time / 100) / 10;
+							    
+			//    		//Conversion
+			// 		var date = new Date(elapsed * 1000);
+			// 		var mm = date.getUTCMinutes();
+			// 		var ss = date.getSeconds();
+			// 		if (mm < 10) {mm = "0"+mm;}
+			// 		if (ss < 10) {ss = "0"+ss;}
+			// 		var formattedElapsedTime = mm+":"+ss;
+			// 		document.getElementById('time').innerHTML=formattedElapsedTime;							
+			// }
+
 			
-		</script>
+			</script>
+		
 	</body>
 </html>

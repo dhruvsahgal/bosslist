@@ -16,10 +16,19 @@
 		<script>
 			var time = 0, elapsed = '0.0';
 			var timer;
+			var pomodori = 1;
+			var pomodoriMax = 4;
+			var breakTime = 5;
+			var breakTimeMax = 30;
+			var intervalTime = 25000;
 			
+
+
 			function myTimer(){
 					
-					timer = window.setInterval(function() {
+				timer = window.setInterval(counter, 1000);
+
+					function counter() {
 			    	time += 1000;
 			    	elapsed = Math.floor(time / 100) / 10;
 							    
@@ -33,9 +42,10 @@
 					if (ss < 10) {ss = "0"+ss;}
 					var formattedElapsedTime = hh+":"+mm+":"+ss;
 					document.getElementById('time').innerHTML=formattedElapsedTime;
-
-				}, 1000); 
+							
+					}
 			}
+
 			function stopTimer() {
                 clearInterval(timer);
             }

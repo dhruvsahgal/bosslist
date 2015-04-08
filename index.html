@@ -1,0 +1,246 @@
+<!doctype html>
+<html>
+ <head>
+ <title>Bosslist</title>
+
+	 <meta charset="utf-8" />
+	 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	 <meta name="viewport" content="width=device-width, initial-scale=1" />
+	 <link rel="stylesheet" href="css/foundation.css" />
+	 <link rel="stylesheet" href="css/app.css">
+	 <link rel="stylesheet" href="css/font-awesome.min.css">
+	 <script src="js/vendor/modernizr.js"></script>
+	 <script src="js/vendor/jquery.js"></script>
+	 <script src="js/vendor/fastclick.js"></script>
+	 <script src="js/foundation.min.js"></script>
+
+
+ </head>
+
+	<body>
+		<!-- Nav bar -->
+		<div class="contain-to-grid ">
+		<nav class="top-bar" data-topbar role="navigation">
+    		<ul class="title-area">
+    			<li class="name">
+     				<h1><a href="#">Bosslist</a></h1>
+    			</li>
+       				 
+ 			 </ul>
+
+			<!-- Right Nav Section -->
+			<section class="top-bar-section">
+			    <ul class="right">
+			    	<li class="has-dropdown">
+			    	<a href="#" > Time Increment</a>
+			    		<ul class="dropdown"> 
+			    		<select  id="incrementVal" onclick="test()">
+						    <option value="10" >10</option>
+						    <option value="20" >20</option>
+						    <option value="30" >30</option>
+						</select>
+						</ul>
+					
+					</li>
+	
+			        <li class="has-dropdown">
+			        	<a href="#"><img src="img/settings_small2.png"></a>
+			        	<ul class="dropdown">
+			          		<li><a href="#">Change Settings</a></li>
+			        	</ul>
+			      	</li>
+			    </ul> 
+			
+			    <ul class="right">
+			    	
+					
+			    	<li>
+			    		<a id="timeTotal" >Total Time (mins): 0:00</a>
+			    	</li>
+			    </ul>
+			      <ul class="right">
+			    	<li>
+			    		<a id="totalTask" class="hello" >Total Tasks: </a>
+			    	</li>
+			    </ul>
+		    </section>
+		</nav>
+		</div>
+		<br>
+		<!-- Timer Setup -->
+		<div class ="row small-16">
+		<strong>Pomodori Value</Strong>
+		<br>
+		<br>
+		<select id="pomodori" name="Pomodori Value">
+			<option value="1">1</option>
+		    <option value="2">2</option>
+		    <option value="3">3</option>
+		    <option value="4">4</option>
+		</select>
+		<br>
+		<br>
+		<strong>Timer:</strong>
+		<button onclick = "myTimer()">Start Timer</button> 
+		<button onclick = "stopTimer()" >Stop Timer</button>
+
+		<Strong>Focused Time: <span id= "time"> 25:00</span></strong>
+		<br>
+		<div> Pomodori value: 
+		<span id="pomodoriValue"></span> </div>
+		<div>Break Time: 
+		<span id = "breakValue"></span> </div>
+		<br>
+		</div>
+
+				<!--Column setup -->
+		<div class="row" >
+ 			<div class="medium-4 columns lines"><strong>MIT</strong></div>
+		  	<div class="medium-4 columns lines"><strong>High Priority</strong></div>
+		 	<div class="medium-4 columns lines"><strong>Low Priority</strong></div>
+		  	
+		  	
+		<!--Times -->	  		
+		<div class="row">
+ 			<div class="medium-4 columns ">
+ 				<p>Total time: (mins)</p>
+ 				<div id="taskMostTime" >0:00</div>
+ 			</div>
+		  	<div class="medium-4 columns ">
+		  		<p>Total time: (mins)</p>
+		  		<p id="taskHighTime">0:00</p>
+		  	</div>
+		 	<div class="medium-4 columns ">
+		 		<p>Total time: (mins)</p>
+		 		<p id="taskLowTime">0:00</p>
+		 	</div>
+		  	<div class="medium-4 columns ">
+		  		
+	  		</div>
+
+	  	<!--Task Lists -->
+		<div class="row">
+			<div class="medium-4 columns ">
+			  	<ul> 
+			  		<button class = "small-12 columns" id="submitMostTask" onclick ="addTaskFunction('taskMost')" >+</button>	  		
+			  		<input  type = "text" id="taskMostName" value="" /> 
+				</ul>
+				<ul>
+					<p id="taskMost" value="" > </p>
+				</ul>
+			</div>
+			<div class="medium-4 columns ">
+			  	<ul> 
+			  		<button class = "small-12 columns" id="submitHighTask" onclick ="addTaskFunction('taskHigh')">+</button>	  		
+			  		<input  type = "text" id="taskHighName" value="" /> 
+				</ul>
+				<ul>
+					<p id="taskHigh" value=""> </p>
+				</ul>
+			</div>
+			<div class="medium-4 columns " >
+			  	<ul> 
+			  		<button class = "small-12 columns" id="submitLowTask" onclick ="addTaskFunction('taskLow')" >+</button>	  		
+			  		<input  type = "text" id="taskLowName" value="" /> 
+				</ul>
+				<ul>
+					<p id="taskLow" value=""> </p>
+				</ul>
+			</div>
+			
+		</div>
+		</div>
+		
+		<!-- Adding Tasks -->
+ 	 	<script type="text/javascript">
+  		$(document).foundation();
+		var count = 0;
+		var seconds = 1500;
+		var countdown;
+		var timerCheck = 0;
+		var pomodoriMax = 4;
+		var breakTime = 5;
+		var breakTimeMax = 30;
+			
+			
+		
+
+		function test() {
+			var dropdown = document.getElementById("incrementVal");
+			var text = dropdown[dropdown.selectedIndex].text;
+			}
+ 	 	
+ 	 	function addTaskFunction(taskId){
+ 	 		var nameAdder = "Name";
+ 	 		var timeAdder = "Time";
+ 	 		var dropdown = document.getElementById("incrementVal");
+			var text = dropdown[dropdown.selectedIndex].text;
+ 	 		var newTask= document.getElementById(taskId + nameAdder).value;
+ 	 			
+ 	 		newTask=document.getElementById(taskId + nameAdder).value;
+			document.getElementById(taskId).innerHTML+= '<br/>' +  newTask;
+			document.getElementById(taskId+nameAdder).value="";
+			count = count +1;
+			document.getElementById(taskId+timeAdder).innerHTML=count*text;
+			document.getElementById("timeTotal").innerHTML = 'Time Total (mins) : ' + count*text;
+
+ 	 	}
+
+
+			function myTimer(){	
+
+				if (timerCheck == 0) {
+					timerCheck = 1;
+
+					countdown = setInterval(counter, 1000);
+					console.log(pomodori.value);
+
+					if (pomodori.value<pomodoriMax) {
+
+						document.getElementById('pomodoriValue').innerHTML = pomodori.value;
+						document.getElementById('breakValue').innerHTML = breakTime;
+
+					}
+					else{
+
+						document.getElementById('pomodoriValue').innerHTML = 'Maxed out';
+						document.getElementById('breakValue').innerHTML = breakTimeMax;
+						
+					}
+				}
+				else{
+
+					console.log("timer already running!");
+				}
+
+			}
+
+			function stopTimer() {
+
+                clearInterval(countdown);
+                timerCheck = 0;
+               
+           }
+
+           function counter() {
+    			var minutes = Math.round((seconds - 30)/60);
+    			var remainingSeconds = seconds % 60;
+    			if (remainingSeconds < 10) {
+        			remainingSeconds = "0" + remainingSeconds;  
+    			}
+    			document.getElementById('time').innerHTML = minutes + ":" + remainingSeconds;
+    			if (seconds == 0) {
+       			clearInterval(countdown);
+       			document.getElementById('time').innerHTML="25:00";
+    			} else {
+       				seconds--;
+   				}
+			}
+		</script>
+
+	
+		
+
+	</body>
+
+</html>

@@ -126,28 +126,50 @@
 
 	  	<!--Task Lists -->
 		<div class="row">
-			<div class="medium-4 columns ">
+            <!--Modal for MIT along with Task Input -->
+            <div class="medium-4 columns ">   
 			  	<ul> 
-			  		<button class = "small-12 columns" id="submitMostTask" onclick ="addTaskFunction('taskMost')" >+</button>	  		
-			  		<input  type = "text" id="taskMostName" value="" placeholder = "Write your task here" /> 
+			  	<a href="#" data-reveal-id="taskModalMost" class="radius button">+</a>
+
+                <div id="taskModalMost" class="reveal-modal"  data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+                    <h2 id="modalTitle">Add a Task</h2>
+                    <input  type = "text" id="taskMostName" placeholder = "Write your task here" onkeydown="if (event.keyCode == 13)  taskModal('taskMost')"/> 
+                    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                </div>
+			  					  		
 				</ul>
 				<ul>
 					<p id="taskMost" value="" > </p>
 				</ul>
 			</div>
+			<!--Modal for High Priority along with Task Input -->
 			<div class="medium-4 columns ">
 			  	<ul> 
-			  		<button class = "small-12 columns" id="submitHighTask" onclick ="addTaskFunction('taskHigh')">+</button>	  		
-			  		<input  type = "text" id="taskHighName" value=""  placeholder = "Write your task here" /> 
+			  	<a href="#" data-reveal-id="taskModalHigh" class="radius button">+</a>
+
+                <div id="taskModalHigh" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+                    <h2 id="modalTitle">Add a Task</h2>
+                    <input  type = "text" id="taskHighName" placeholder = "Write your task here" onkeydown="if (event.keyCode == 13)  taskModal('taskHigh')"/> 
+                    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                </div>
+			  		
 				</ul>
 				<ul>
 					<p id="taskHigh" value=""> </p>
 				</ul>
 			</div>
 			<div class="medium-4 columns " >
+            <!--Modal for Low Priority along with Task Input -->
+
 			  	<ul> 
-			  		<button class = "small-12 columns" id="submitLowTask" onclick ="addTaskFunction('taskLow')" >+</button>	  		
-			  		<input  type = "text" id="taskLowName" value=""  placeholder = "Write your task here" /> 
+			  	<a href="#" data-reveal-id="taskModalLow" class="radius button">+</a>
+
+                <div id="taskModalLow" class="reveal-modal"  data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+                    <h2 id="modalTitle">Add a Task</h2>
+                    <input  type = "text" id="taskLowName" placeholder = "Write your task here" onkeydown="if (event.keyCode == 13)  taskModal('taskLow')"/> 
+                    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                </div>
+			  		 
 				</ul>
 				<ul>
 					<p id="taskLow" value=""> </p>
@@ -177,6 +199,9 @@
  	 		//var dropdown = document.getElementById("incrementVal");
 			var text = document.getElementById("incrementVal").value;
  	 		var newTask= document.getElementById(taskId + nameAdder).value;
+            console.log(taskId);
+            console.log(newTask);
+            console.log(text);
 				
  	 		newTask=document.getElementById(taskId + nameAdder).value;
 			if (newTask.length==0){
@@ -208,17 +233,13 @@
 
 				}
 				else{
-
 					document.getElementById('pomodoriValue').innerHTML = 'Maxed out';
 					document.getElementById('breakValue').innerHTML = breakTimeMax;
-					
 				}
 			}
 			else{
-
 				console.log("timer already running!");
 			}
-
 		}
 		//Pomodoro timer to stop
 		function stopTimer() {
@@ -247,6 +268,14 @@
 		function reset(){
 			location.reload();
 		}
+            
+        function taskModal(taskType){
+            addTaskFunction(taskType);
+            $('#myModal').foundation('reveal', 'close')
+            console.log(taskType);
+            
+            
+        }
 		</script>
 
 	

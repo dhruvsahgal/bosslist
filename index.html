@@ -63,17 +63,7 @@
 		<br>
 		<!-- Timer Setup -->
 		<div class ="row small-16">
-			<!-- <strong>Pomodori Value</Strong>
-			<br>
-			<br>
-			<select id="pomodori" name="Pomodori Value">
-				<option value="1">1</option>
-			    <option value="2">2</option>
-			    <option value="3">3</option>
-			    <option value="4">4</option>
-			</select>
-			<br>
-			<br> -->
+
 			<strong>Timer:</strong>
 			<button onclick = "myTimer()">Start Timer</button> 
 			<button onclick = "stopTimer()" >Stop Timer</button>
@@ -81,29 +71,12 @@
 			<Strong>Focused Time: <span id= "time"> 25:00</span></strong>
 			<br>
 			<button onclick="reset()">Reset Button</button>
-		<!-- 	<div> Pomodori value: 
-				<span id="pomodoriValue"></span> 
-			</div>
-			<div>Break Time: 
-				<span id = "breakValue"></span> 
-			</div>
-				<br> -->
+
 		</div>
-<!--
-		<div class = "row small-16">
-			<strong>Time Increment (mins)</Strong>
-			
-				 <option value="10">10</option>
-			    <option value="20">20</option>
-			    <option value="30">30</option>
-			</select> 
-		</div>
-		<br>
-		<br>
--->
-				<!--Column setup -->
+
+        <!--Column setup -->
 		<div class="row" >
- 			<div class="medium-4 columns lines"><strong>MIT</strong></div>
+ 			<div class="medium-4 columns lines"><strong>Most Important Tasks</strong></div>
 		  	<div class="medium-4 columns lines"><strong>High Priority</strong></div>
 		 	<div class="medium-4 columns lines"><strong>Low Priority</strong></div>
 		  	
@@ -185,29 +158,42 @@
 		</div>
 		
 		<!-- Adding Tasks -->
- 	 	<script type="text/javascript">
-  		$(document).foundation();
-		
+        <script > 
+        $(document).foundation();
 		var count = 0;
-		var total = 0;
+		var total = [0, 0, 0];
 		var seconds = 1500; // For Pomodoro timer. 1500 seconds = 25 mins.
 		var countdown;
+        var times=[];
+        var column;
+        var totalTime=0;
 		var timerCheck = 0;
 		var pomodoriMax = 4;
 		var breakTime = 5;
 		var breakTimeMax = 30;
+        
 			
 		//Adding tasks and counting up the total time
 	 	function addTaskFunction(taskId){
  	 		var nameAdder = "Name";
  	 		var timeAdder = "Time";
             var timeIncrement = "incrementVal"+taskId.substring(4);
- 	 	    console.log(timeIncrement);
-			var text = document.getElementById(timeIncrement).value;
+                if (taskId === "taskMost"){
+                    var column = 0;
+                }
+                else if (taskId === "taskHigh"){
+                    var column = 1;    
+                }
+                else {
+                    var column = 2;
+                }
+ 	 	    console.log(timeIncrement);   
+			var text = parseInt(document.getElementById(timeIncrement).value); //this converts the variable in to a number so the proper addtion can happen
  	 		var newTask= document.getElementById(taskId + nameAdder).value;
             console.log(taskId);
 //            console.log(newTask);
 //            console.log(text);
+            
 				
  	 		newTask=document.getElementById(taskId + nameAdder).value;
 			if (newTask.length==0){
@@ -216,10 +202,19 @@
 			document.getElementById(taskId).innerHTML+= '<br/>' +  newTask;
 			document.getElementById(taskId+nameAdder).value="";
 			count = count +1;
-			total = text*1 + total;  //this converts the variable in to a number so the proper addtion can happen
-			document.getElementById(taskId+timeAdder).innerHTML=total;
+            total[column] = text + total[column];
+			times[column] = total[column];  //this converts the variable in to a number so the proper addtion can happen
+			document.getElementById(taskId+timeAdder).innerHTML=times[column];
 			document.getElementById("totalTask").innerHTML = 'Total Tasks: ' + count;
-			document.getElementById("taskTimeTotal").innerHTML = 'Total Task Time (mins): ' + total;
+            totalTime = times.reduce(addArray, 0);
+            function addArray(a,b){
+            return a + b;
+            }
+            console.log(totalTime);
+			document.getElementById("taskTimeTotal").innerHTML = 'Total Task Time (mins): ' + totalTime;
+            console.log(column);
+            console.log(times);
+            console.log(count);
 			
  	 	}
 
@@ -283,7 +278,7 @@
 //            console.log(modalType);
             
         }
-		</script>
+        </script>
 
 	
 		

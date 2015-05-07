@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
  <head>
- <title>Bosslist</title>
+ <title>BossList</title>
 
 	 <meta charset="utf-8" />
 	 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -23,7 +23,7 @@
 		<nav class="top-bar" data-topbar role="navigation">
     		<ul class="title-area">
     			<li class="name">
-     				<h1><a href="#">Bosslist</a></h1>
+     				<h1><a href="#">BossList</a></h1>
     			</li>
        				 
  			 </ul>
@@ -73,6 +73,18 @@
 			<button onclick="reset()">Reset Button</button>
 
 		</div>
+		<div class="row small-1 ">
+			<select name="Minutes" id="inputMins">
+				<option value="10">10 mins</option>
+				<option value="20">20 mins</option>
+				<option value="25">25 mins</option>
+			</select> 
+		</div>
+        
+        <div class="row small-16">
+            <strong>Number of MITs you can complete in one Pomodoro:</strong>
+            <p id="completion"></p>
+        </div>
 
         <!--Column setup -->
 		<div class="row" >
@@ -158,43 +170,45 @@
 		</div>
 		
 		<!-- Adding Tasks -->
-        <script > 
+        <script> 
         $(document).foundation();
 		var count = 0;
 		var total = [0, 0, 0];
+        var minutes = document.getElementById("inputMins").value;
 		var seconds = 1500; // For Pomodoro timer. 1500 seconds = 25 mins.
 		var countdown;
-        var times=[];
         var column;
         var totalTime=0;
 		var timerCheck = 0;
 		var pomodoriMax = 4;
 		var breakTime = 5;
 		var breakTimeMax = 30;
-        
+		var pomodori = 0;
+        console.log(minutes);
 			
 		//Adding tasks and counting up the total time
 	 	function addTaskFunction(taskId){
  	 		var nameAdder = "Name";
  	 		var timeAdder = "Time";
             var timeIncrement = "incrementVal"+taskId.substring(4);
-                if (taskId === "taskMost"){
-                    var column = 0;
-                }
-                else if (taskId === "taskHigh"){
-                    var column = 1;    
-                }
-                else {
-                    var column = 2;
-                }
- 	 	    console.log(timeIncrement);   
+            if (taskId === "taskMost"){
+                var column = 0;
+            }
+            else if (taskId === "taskHigh"){
+                var column = 1;    
+            }
+            else {
+                var column = 2;
+            }
+ 	 	    console.log("timeIncrement: " + timeIncrement); 
+            
 			var text = parseInt(document.getElementById(timeIncrement).value); //this converts the variable in to a number so the proper addtion can happen
  	 		var newTask= document.getElementById(taskId + nameAdder).value;
-            console.log(taskId);
+            console.log("taskId: " + taskId);
 //            console.log(newTask);
 //            console.log(text);
-            
-				
+			console.log(pomodori);
+    
  	 		newTask=document.getElementById(taskId + nameAdder).value;
 			if (newTask.length==0){
 				newTask="Blank Task";
@@ -203,20 +217,30 @@
 			document.getElementById(taskId+nameAdder).value="";
 			count = count +1;
             total[column] = text + total[column];
-			times[column] = total[column];  //this converts the variable in to a number so the proper addtion can happen
-			document.getElementById(taskId+timeAdder).innerHTML=times[column];
+			document.getElementById(taskId+timeAdder).innerHTML=total[column];
 			document.getElementById("totalTask").innerHTML = 'Total Tasks: ' + count;
-            totalTime = times.reduce(addArray, 0);
-            function addArray(a,b){
+            totalTime = total.reduce(addArray, 0); //need to understand the reduce method
+            //this function adds the values in the array
+            function addArray(a,b){  
             return a + b;
             }
-            console.log(totalTime);
+            
+            console.log("totalTime: "  + totalTime);
 			document.getElementById("taskTimeTotal").innerHTML = 'Total Task Time (mins): ' + totalTime;
-            console.log(column);
-            console.log(times);
-            console.log(count);
-			
- 	 	}
+            console.log("column#: " + column);
+            console.log("count: " + count);
+			console.log ("total : " + total);
+            
+            
+            var taskF = minutes - total[0];
+            if  (taskF>=0 ){
+                var remainingTasks = (minutes/total[0]);
+                document.getElementById('completion').innerHTML = "You can complete " + remainingTasks + " tasks";
+            }
+            else {
+                document.getElementById('completion').innerHTML = " You have too many tasks!";
+            }
+        }
 
  	 	//Pomodoro timer function to start updating and checking for which Pomodori it is. 
 		function myTimer(){	
@@ -227,16 +251,16 @@
 				countdown = setInterval(counter, 1000);
 				console.log(pomodori.value);
 
-				if (pomodori.value<pomodoriMax) {
+				// if (pomodori.value<pomodoriMax) {
 
-					document.getElementById('pomodoriValue').innerHTML = pomodori.value;
-					document.getElementById('breakValue').innerHTML = breakTime;
+				// 	document.getElementById('pomodoriValue').innerHTML = pomodori.value;
+				// 	document.getElementById('breakValue').innerHTML = breakTime;
 
-				}
-				else{
-					document.getElementById('pomodoriValue').innerHTML = 'Maxed out';
-					document.getElementById('breakValue').innerHTML = breakTimeMax;
-				}
+				// }
+				// else{
+				// 	document.getElementById('pomodoriValue').innerHTML = 'Maxed out';
+				// 	document.getElementById('breakValue').innerHTML = breakTimeMax;
+				// }
 			}
 			else{
 				console.log("timer already running!");
@@ -275,10 +299,10 @@
             var modalType = "#" + modalName + taskType.substring(4) ;
             addTaskFunction(taskType);
             $(modalType).foundation('reveal', 'close');
-//            console.log(modalType);
             
         }
         </script>
+
 
 	
 		
